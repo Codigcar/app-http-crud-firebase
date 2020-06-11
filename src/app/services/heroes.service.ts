@@ -30,4 +30,33 @@ export class HeroesService {
     delete heroeTemp.id;
     return this.http.put(`${this.url}/heroes/${ heroe.id }.json`, heroeTemp);
   }
+
+  getAllHeroes(){
+    return this.http.get(`${ this.url }/heroes.json`)
+      .pipe(
+        map( this.crearArregloHeroes )
+      );
+  }
+
+  private crearArregloHeroes( heroesObj: object ){
+
+    const arrayHeroes: HeroeModel[] = [];
+
+    // console.log(heroesObj);
+
+    if ( heroesObj === null){ return []; }
+
+    Object.keys( heroesObj ).forEach( key => {
+      const heroe: HeroeModel = heroesObj[key];
+      heroe.id = key;
+
+      arrayHeroes.push( heroe );
+    });
+
+    return arrayHeroes;
+  }
+
+  getHeroeById( id: string){
+    return this.http.get(`${ this.url }/heroes/${ id }.json`);
+  }
 }
