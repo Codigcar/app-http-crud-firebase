@@ -11,15 +11,18 @@ import Swal from 'sweetalert2';
 export class HeroesComponent implements OnInit {
 
   arrayheroes: HeroeModel[] = [];
+  cargando = false;
 
   constructor(private heroesService: HeroesService) { }
 
   ngOnInit(): void {
+    this.cargando = true;
 
     this.heroesService.getAllHeroes()
       .subscribe( resp => {
         console.log(resp);
         this.arrayheroes = resp;
+        this.cargando = false;
       });
 
   }
