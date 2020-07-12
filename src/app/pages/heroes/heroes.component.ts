@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HeroesService } from '../../services/heroes.service';
 import { HeroeModel } from '../../models/heroe.model';
 import Swal from 'sweetalert2';
+import { PetModel } from '../../models/pet.model';
+import { ListpetService } from '../../services/listpet.service';
 
 @Component({
   selector: 'app-heroes',
@@ -11,20 +13,20 @@ import Swal from 'sweetalert2';
 export class HeroesComponent implements OnInit {
 
   arrayheroes: HeroeModel[] = [];
+  arraypets: PetModel[] = [];
   cargando = false;
 
-  constructor(private heroesService: HeroesService) { }
+  constructor(private heroesService: HeroesService, private listpetService: ListpetService) { }
 
   ngOnInit(): void {
     this.cargando = true;
 
-    this.heroesService.getAllHeroes()
+    this.listpetService.getAllPets()
       .subscribe( resp => {
         console.log(resp);
-        this.arrayheroes = resp;
+        this.arraypets = resp;
         this.cargando = false;
       });
-
   }
 
   deleteHeroById( heroe: HeroeModel, i: number ){
